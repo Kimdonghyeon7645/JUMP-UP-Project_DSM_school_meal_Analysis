@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
 import time
+import pandas as pd
 
 
 menu = dict()
@@ -30,9 +31,9 @@ for i in menu:
 file = ''
 if func:
     try:
-#         options = webdriver.ChromeOptions()
-#         options.add_argument('headless')
-#         driver = webdriver.Chrome(r"C:\Users\user\Documents\chromedriver.exe", chrome_options=options)
+        options = webdriver.ChromeOptions()
+        options.add_argument('headless')
+        driver = webdriver.Chrome(r"C:\Users\user\Documents\chromedriver.exe", chrome_options=options)
         driver = webdriver.Chrome(r"C:\Users\user\Documents\chromedriver.exe")
         driver.get('http://dsmhs.djsch.kr/boardCnts/list.do?type=default&page=1&m=020503&s=dsmhs&boardID=54797')
         time.sleep(2)
@@ -45,10 +46,8 @@ if func:
     finally:
         driver.close()
 
-import pandas as pd
-
 print(file)
-xl=pd.ExcelFile(file)
+xl = pd.ExcelFile(file)
 meal_li = []
 for meal in ['조식', '중식', '석식']:
     li = []
@@ -59,15 +58,15 @@ for meal in ['조식', '중식', '석식']:
         del df['Unnamed: 8']
         li.append(df)
     meal_li.append(li)
-choice = input('[!] 무슨 작업을 하실 것인지 아래의 선택지 중 선택하세요'
-               '\n(특정 날짜 식단 분석 -> 1, 특정 주간 식단 분석 -> 2, 월 전체 식단 분석 -> 3)\n(숫자를 입력하세요) : ')
+# choice = input('[!] 무슨 작업을 하실 것인지 아래의 선택지 중 선택하세요'
+#               '\n(특정 날짜 식단 분석 -> 1, 특정 주간 식단 분석 -> 2, 월 전체 식단 분석 -> 3)\n(숫자를 입력하세요) : ')
+choice = 2  # TESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTESTTEST
 
-choice = 2
 if choice is 2:
     wek = int(input("원하는 주를 입력하세요 (첫번째 주면 '1'입력) : "))
     ran = int(input('선택지를 선택하세요\n(조식 분석 -> 1, 중식 분석 -> 2, 석식 분석 -> 3)\n(숫자를 입력하세요) : '))
 # meal_li[0][0].T.tail(7)
-    for i in range(ran-1, ran):1
+    for i in range(ran-1, ran):
         days = meal_li[i][wek-1].T.tail(7)
         print(days)
         print(days.T.head(3).tail(2).T)
